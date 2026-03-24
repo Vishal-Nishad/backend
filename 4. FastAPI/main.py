@@ -11,9 +11,16 @@ def greet():
     st = {"greet":"hello this is vishal"}
     return st
 
+# products = [
+#     Product(1,"phone", "budget phone", 99, 10),
+#     Product(2,"laptop", "budget laptop", 500, 40),
+# ]
+
 products = [
-    Product(1,"phone", "budget phone", 99, 10),
-    Product(2,"laptop", "budget laptop", 500, 40),
+    Product(id= 1, name= "phone", description= "budget phone", price= 99, quantity= 10),
+    Product(id= 2, name= "laptop", description= "budget laptop", price= 999, quantity= 20),
+    Product(id= 3, name= "cpu", description= "intel cpu", price= 15, quantity= 24),
+    Product(id= 4, name= "gpu", description= "nvidia gpu", price= 50, quantity= 45),
 ]
 
 print(products[0].__dict__)
@@ -24,6 +31,10 @@ print(products)
 def get_all_products():
     return products
 
-print(get_all_products())
-
-print(greet())
+@app.get("/product/{id}")
+def get_product(id:int):
+    for i in range(len(products)):
+        if products[i].id == id:
+            return products[i]
+        
+print(get_product(3))
