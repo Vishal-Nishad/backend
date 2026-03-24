@@ -36,5 +36,10 @@ def get_product(id:int):
     for i in range(len(products)):
         if products[i].id == id:
             return products[i]
-        
+    return "product is not available for this id"
 print(get_product(3))
+
+@app.post("/product")
+def add_product(product:Product):
+    products.append(product)
+    return product
