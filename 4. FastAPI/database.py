@@ -1,7 +1,7 @@
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
 
-db_url = "postgresql://postgres:vishal@localhost:5432"
+db_url = "postgresql://postgres:vishal@localhost:5432/vishaldb"
 engine = create_engine(db_url)
-SessionLocal = sessionmaker(autocommit = False, autoflush=False, bind=engine)
+session = sessionmaker(autocommit = False, autoflush=False, bind=engine)
 

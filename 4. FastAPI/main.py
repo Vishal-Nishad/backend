@@ -1,8 +1,11 @@
 from fastapi import FastAPI
 from models import Product
+from database import session, engine
+import database_models
 
 app = FastAPI()
 
+database_models.Base.metadata.create_all(bind=engine)
 
 
 @app.get('/')
@@ -23,9 +26,22 @@ products = [
     Product(id= 4, name= "gpu", description= "nvidia gpu", price= 50, quantity= 45),
 ]
 
-print(products[0].__dict__)
+# print(products[0].__dict__)
+# print(products[1])  # as it is object of class Product which 
+# is inherited from Pydantic basemodel, so it automatically
+# print(repr()) show in below example
 
-print(products)
+print(str(products[1]))
+print(repr(products[1]))
+
+print()
+
+# print(products)  # this just print the list as it is
+
+print(products[0].model_dump())
+print(products[1])
+print(repr(products[1]))
+print(type(products[1]))
 
 @app.get("/products")
 def get_all_products():
@@ -37,7 +53,7 @@ def get_product(id:int):
         if products[i].id == id:
             return products[i]
     return "product is not available for this id"
-print(get_product(3))
+# print(get_product(3))
 
 @app.post("/product")
 def add_product(product:Product):
