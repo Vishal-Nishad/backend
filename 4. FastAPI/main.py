@@ -119,3 +119,12 @@ def delete_product(id:int):
             del products[i]
             return "Producted Deleted"
     return "Product not found"
+
+@app.delete("/product_db")
+def delete_product_db(id:int, db:Session= Depends(get_db)):
+    result = db.query(database_models.Product).filter(database_models.Product.id == id).first()
+    if result:
+        db.delete(result)
+        db.commit()
+        return f"row with id:{id} deleted successfully"
+    return f"Data with id:{id} does not exist"
