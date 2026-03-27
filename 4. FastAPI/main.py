@@ -74,10 +74,20 @@ def get_product(id:int):
     return "product is not available for this id"
 # print(get_product(3))
 
+@app.get("/product_db/{id}")
+def get_product_db(id:int, db:Session = Depends(get_db)):
+    result = db.query(database_models.Product).filter(database_models.Product.id == id).first()
+    if result:
+        return result
+    return f"Product does not exist with this id:{id}"
+
 @app.post("/product")
 def add_product(product:Product):
     products.append(product)
     return product
+
+# @app.post("/product_db")
+# def add_product_db()
 
 @app.put("/product")
 def update_product(id:int, product:Product):
