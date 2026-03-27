@@ -26,10 +26,16 @@ products = [
     Product(id= 4, name= "gpu", description= "nvidia gpu", price= 50, quantity= 45),
 ]
 
+def init_db():
+    db = session()
+    for p in products:
+        db.add(p)
+init_db()
+
 # print(products[0].__dict__)
 # print(products[1])  # as it is object of class Product which 
 # is inherited from Pydantic basemodel, so it automatically
-# print(repr()) show in below example
+# print(str()) show in below example, overridding repr()
 
 print(str(products[1]))
 print(repr(products[1]))
